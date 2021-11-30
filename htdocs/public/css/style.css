@@ -1,0 +1,100 @@
+* {
+    transition: 0.5s;
+    font-family: 'Open Sans', sans-serif;
+}
+
+body {
+    background-color: gainsboro;
+}
+
+.container {
+    background-color: white;
+}
+
+.pull-right img-thumbnail {
+    margin-top: -10px;
+    margin-bottom: 10px
+}
+
+.header-row {
+    margin-top: 20px
+}
+
+.banner-img {
+    margin-bottom: 20px
+}
+
+.navbar {
+    margin-bottom: 0;
+}
+
+.product-img {
+    width: 70%;
+}
+
+.header-row {
+    width: 200px;
+    height: auto;
+}
+
+.nav-item {
+    width: 95px!important;
+    height: 33px!important;
+    display: flex!important;
+    justify-content: center!important;
+    border: 1px solid grey!important;
+    border-radius: 10px!important;
+    font-size: 13px!important;
+    font-weight: 800!important;
+    align-items: center!important;
+    margin-right: 7px!important;
+    margin-left: 7px !important;
+}
+
+.nav-item:hover {
+    background-color: grey!important;
+    color: white!important;
+    border-color: black!important;
+}
+
+.join-button {
+    height: 37px !important;
+    width: 95px;
+    outline: none;
+    border: 1px solid grey;
+    border-radius: 7px;
+    margin: 13px;
+    font-size: 20px!important;
+    font-weight: 800!important;
+}
+
+.join-button:hover {
+    background-color: grey;
+    color: white;
+    border-color: black;
+    font-weight: 900!important;
+    letter-spacing: 3px;
+    text-decoration: solid;
+}
+
+.join-jumbo {
+    width: 100%;
+    height: 190px;
+    /* margin: 30px; */
+    background-color: grey;
+    /* border-radius: 61%; */
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.container-fluid {
+    background-color: white!important;
+}
+
+.navbar-light {
+    background-color: white!important;
+}
+
+.card-

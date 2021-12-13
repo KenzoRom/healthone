@@ -21,14 +21,11 @@ GLOBAL $product;
         </ol>
     </nav>
 
-    <div class="row gy-3 ">
-        <div class="product-card">
-            <img
-        </div>
-    <?php
-        echo $product->name;
-    ?>
+    <div class="product-box">
+        <h1><?= $product->name ?></h1>
         <img src="<?= $product->image ?>">
+        <p><?= $product->description ?></p>
+    </div>
     <?php
     include_once('defaults/footer.php');
 

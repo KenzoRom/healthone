@@ -38,6 +38,22 @@ switch ($params[1]) {
             include_once "../Templates/categories.php";
         }
         break;
+        
+    case 'register':
+        $titleSuffix = ' | register';
+        include_once "../Templates/register.php";
+        break;
+
+    case 'inlog':
+        $titleSuffix = ' | inlog';
+        include_once "../Templates/inlog.php";
+        break;
+
+    case 'contact':
+        $titleSuffix = ' | Contact';
+        include_once "../Templates/contact.php";
+        break;
+        
     default:
         $titleSuffix = ' | Home';
         include_once "../Templates/home.php";

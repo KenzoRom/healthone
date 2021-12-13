@@ -1,7 +1,8 @@
 <figure>
     <div class="join-jumbo">
+        <img src="/public/img/banner.jpg">
         <h1>Join de Club!</h1>
-        <button class="join-button">Join</button>
+        <button onclick="location.href='./register'" class="join-button">Join</button>
     </div>
     
 </figure>

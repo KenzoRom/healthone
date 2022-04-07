@@ -2,11 +2,16 @@
 require '../Modules/Categories.php';
 require '../Modules/Products.php';
 require '../Modules/Database.php';
+require '../Modules/user.php';
+
+define("DOC_ROOT", realpath(dirname(__DIR__)));
+define("TEMPLATE_ROOT", realpath(DOC_ROOT . "/Templates"));
 
 $request = $_SERVER['REQUEST_URI'];
 $params = explode("/", $request);
 $title = "HealthOne";
 $titleSuffix = "";
+session_start();
 
 switch ($params[1]) {
     case 'categories':
@@ -21,10 +26,7 @@ switch ($params[1]) {
                 $productId = $_GET['product_id'];
                 $product = getProduct($productId);
                 $titleSuffix = ' | ' . $product->name;
-                if(isset($_POST['name']) && isset($_POST['review'])) {
-                    saveReview($_POST['name'],$_POST['review']);
-                    $reviews=getReviews($productId);
-                }
+                
                 // TODO Zorg dat je hier de product pagina laat zien
                 include_once "../Templates/product.php";
 
@@ -41,12 +43,36 @@ switch ($params[1]) {
         
     case 'register':
         $titleSuffix = ' | register';
+        if(isset($_POST['register'])) {
+            RegisterUser($_POST['username'], $_POST['email'], $_POST['password']);
+        }
         include_once "../Templates/register.php";
         break;
 
     case 'inlog':
         $titleSuffix = ' | inlog';
+        if(isset($_POST['inlog'])) {
+            $email = filter_input(INPUT_POST, 'email', FILTER_VALIDATE_EMAIL);
+            $password = filter_input(INPUT_POST, 'password');
+            $user = checkLogin($email, $password);
+            if($user == false) {
+                $error['title'] = 'Incorrect!';
+                $error['message'] = 'Incorrect credentials!';
+            } else {
+                $_SESSION['inlog'] = true;
+                $_SESSION['role'] = $user->role;
+                $_SESSION['email'] = $user->email;
+            }
+        }
         include_once "../Templates/inlog.php";
+        break;
+    case 'logout':
+        session_destroy();
+        header("Location: /");
+        break;
+
+    case 'admin':
+        include_once 'admin.php';
         break;
 
     case 'contact':

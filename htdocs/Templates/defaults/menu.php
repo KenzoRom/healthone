@@ -21,9 +21,15 @@
                 </li>
             </ul>
             <ul class="navbar-nav ms-auto">
+                <?php if (isset($_SESSION) && $_SESSION['inlog']): ?>
+                <li class="nav-item">
+                    <a class="nav-link" href="/logout">uitloggen</a>
+                </li>
+                <?php else: ?>
                 <li class="nav-item">
                     <a class="nav-link" href="/inlog">inloggen</a>
                 </li>
+                <?php endif; ?>
             </ul>
         </div>
     </div>

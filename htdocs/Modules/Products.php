@@ -22,12 +22,28 @@ function getProduct(int $productId)
     return $request;
 }
 
-function getAllProductInfo()
+function getAllProducts():array
 {
     global $pdo;
-    $query = $pdo->prepare("SELECT * FROM products");
+    $query = $pdo->prepare("SELECT * FROM products ORDER BY categoryid");
     $query->execute();
     $result = $query->fetchAll(PDO::FETCH_CLASS,'Product');
 
     return $result;
+}
+
+function addProduct($name,$categoryId,$description,$picture){
+    try{
+        global $pdo;
+        $query=$pdo->prepare('INSERT INTO products (name , categoryid ,description, image) VALUES (:name,:categoryid,:description,:image)');
+        $query->bindParam('name',$name);
+        $query->bindParam('categoryid',$categoryId);
+        $query->bindParam('description',$description);
+        $query->bindParam('image',$image);
+
+        $query->execute();
+    }
+    catch (PDOException $e){
+        echo $e->getMessage();
+    }
 }

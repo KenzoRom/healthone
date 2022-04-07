@@ -9,13 +9,14 @@
             include_once ('defaults/header.php');
             include_once ('defaults/menu.php');
             include_once ('defaults/pictures.php');
+            include_once ('defaults/errorMessage.php');
             ?>
             <div class="register-form">
                 <h2>Login:</h2>
-                <form class="form-style">
-                Email address<input type="text">
-                Wachtwoord<input type="text">
-                <input type="submit" value="login" class="button-styling">
+                <form method="POST" class="form-style">
+                Email address<input type="text" name="email">
+                Wachtwoord<input type="text" name="password">
+                <input type="submit" name="inlog" value="login" class="button-styling">
                 </form>
             </div>
             <?php

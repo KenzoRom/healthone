@@ -2,11 +2,14 @@
 require '../Modules/Categories.php';
 require '../Modules/Products.php';
 require '../Modules/Database.php';
+require '../Modules/user.php';
+require '../Modules/Reviews.php';
 
 $request = $_SERVER['REQUEST_URI'];
 $params = explode("/", $request);
 $title = "HealthOne";
 $titleSuffix = "";
+session_start();
 
 switch ($params[1]) {
     case 'categories':
@@ -21,10 +24,16 @@ switch ($params[1]) {
                 $productId = $_GET['product_id'];
                 $product = getProduct($productId);
                 $titleSuffix = ' | ' . $product->name;
-                if(isset($_POST['name']) && isset($_POST['review'])) {
-                    saveReview($_POST['name'],$_POST['review']);
-                    $reviews=getReviews($productId);
+                if(isset($_POST['addReview'])) {
+                    $review = filter_input(INPUT_POST, "review");
+                    $stars = filter_input(INPUT_POST, "stars");
+                    if(!isset($stars) || $stars == false) {
+                        echo "Not all fields were filled in!";
+                    } else {
+                        saveReview($review, $stars, $productId);
+                    }
                 }
+                $getProductReview = getProductReviews($productId);
                 // TODO Zorg dat je hier de product pagina laat zien
                 include_once "../Templates/product.php";
 
@@ -41,12 +50,52 @@ switch ($params[1]) {
         
     case 'register':
         $titleSuffix = ' | register';
+        if(isset($_POST['register'])) {
+            RegisterUser($_POST['username'], $_POST['email'], $_POST['password']);
+        }
         include_once "../Templates/register.php";
         break;
 
     case 'inlog':
         $titleSuffix = ' | inlog';
+        if(isset($_POST['inlog'])) {
+            $email = filter_input(INPUT_POST, 'email', FILTER_VALIDATE_EMAIL);
+            $password = filter_input(INPUT_POST, 'password');
+            $user = checkLogin($email, $password);
+            if($user == false) {
+                $error['title'] = 'Incorrect!';
+                $error['message'] = 'Incorrect credentials!';
+            } else {
+                $_SESSION['inlog'] = true;
+                $_SESSION['role'] = $user->role;
+                var_dump($_SESSION['role']);
+                $_SESSION['email'] = $user->email;
+            }
+        }
         include_once "../Templates/inlog.php";
+        break;
+    case 'logout':
+        session_destroy();
+        header("Location: /");
+        break;
+
+    case 'admin':
+        include_once 'admin.php';
+        break;
+    case 'profile':
+        $titleSuffix = ' | Profile';
+        if(isset($_SESSION['email'])) {
+            include_once "../Templates/profile.php";
+        }
+        break;
+    case 'profileEdit':
+        if(isset($_SESSION['email'])) {
+            $email = $_SESSION['password'];
+            var_dump($email);
+                
+            $titleSuffix = ' | profileEdit';
+            include_once "../Templates/profileEdit.php";
+        }
         break;
 
     case 'contact':

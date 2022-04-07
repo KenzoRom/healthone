@@ -32,7 +32,7 @@ function getAllProducts():array
     return $result;
 }
 
-function addProduct($name,$categoryId,$description,$picture){
+function addProduct($name,$categoryId,$description,$image){
     try{
         global $pdo;
         $query=$pdo->prepare('INSERT INTO products (name , categoryid ,description, image) VALUES (:name,:categoryid,:description,:image)');
@@ -44,6 +44,37 @@ function addProduct($name,$categoryId,$description,$picture){
         $query->execute();
     }
     catch (PDOException $e){
+        echo $e->getMessage();
+    }
+}
+
+function removeProduct($id){
+    try{
+        global $pdo;
+        $query=$pdo->prepare('DELETE FROM products WHERE id = :id');
+        $query->bindParam('id',$id);
+        $query->execute();
+    }
+    catch (PDOException $e){
+        echo $e->getMessage();
+    }
+}
+
+function updateProduct($newName,$newCategoryId,$newDescription,$id){
+    try{
+        global $pdo;
+        $query=$pdo->prepare('UPDATE product SET
+                                                         name=:name,
+                                                         categoryid=:categoryid,
+                                                         description=:description,
+                                                         WHERE id=:id');
+        $query->bindParam('name',$newName);
+        $query->bindParam('categoryid',$newCategoryId);
+        $query->bindParam('description',$newDescription);
+        $query->bindParam('id',$id);
+        $query->execute();
+    }
+    catch(PDOException $e){
         echo $e->getMessage();
     }
 }

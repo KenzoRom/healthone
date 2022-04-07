@@ -4,8 +4,13 @@ require '../Modules/Products.php';
 require '../Modules/Database.php';
 require '../Modules/user.php';
 
+
+
 define("DOC_ROOT", realpath(dirname(__DIR__)));
 define("TEMPLATE_ROOT", realpath(DOC_ROOT . "/Templates"));
+
+require '../Modules/Reviews.php';
+
 
 $request = $_SERVER['REQUEST_URI'];
 $params = explode("/", $request);
@@ -26,7 +31,20 @@ switch ($params[1]) {
                 $productId = $_GET['product_id'];
                 $product = getProduct($productId);
                 $titleSuffix = ' | ' . $product->name;
+
                 
+
+                if(isset($_POST['addReview'])) {
+                    $review = filter_input(INPUT_POST, "review");
+                    $stars = filter_input(INPUT_POST, "stars");
+                    if(!isset($stars) || $stars == false) {
+                        echo "Not all fields were filled in!";
+                    } else {
+                        saveReview($review, $stars, $productId);
+                    }
+                }
+                $getProductReview = getProductReviews($productId);
+
                 // TODO Zorg dat je hier de product pagina laat zien
                 include_once "../Templates/product.php";
 
@@ -61,6 +79,9 @@ switch ($params[1]) {
             } else {
                 $_SESSION['inlog'] = true;
                 $_SESSION['role'] = $user->role;
+
+                var_dump($_SESSION['role']);
+
                 $_SESSION['email'] = $user->email;
             }
         }
@@ -73,6 +94,19 @@ switch ($params[1]) {
 
     case 'admin':
         include_once 'admin.php';
+        break;
+
+    case 'profile':
+        $titleSuffix = ' | Profile';
+        if(isset($_SESSION['email'])) {
+            include_once "../Templates/profile.php";
+        }
+        break;
+    case 'profileEdit':
+        if(isset($_SESSION['email'])) {
+            $titleSuffix = ' | profileEdit';
+            include_once "../Templates/profileEdit.php";
+        }
         break;
 
     case 'contact':

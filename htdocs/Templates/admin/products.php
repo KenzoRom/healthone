@@ -9,7 +9,7 @@ include_once(TEMPLATE_ROOT . '/defaults/head.php');
 <div class="container">
     <?php
     include_once(TEMPLATE_ROOT . '/defaults/header.php');
-    include_once(TEMPLATE_ROOT . '/defaults/menu.php');
+    include_once(TEMPLATE_ROOT . '/defaults/adminnav.php');
     ?>
 
     <nav aria-label="breadcrumb">
@@ -30,13 +30,24 @@ include_once(TEMPLATE_ROOT . '/defaults/head.php');
                             <img class='product-img img-responsive center-block' src='". $data->image . " 'alt='idk'/>
                         </a>
                         <div class='card-title mb-3'>". $data->name ."</div>
+                        <div class='card-footer'>
+                            <a href='/admin/update/$data->id'><button class='btn btn-outline-primary'>Update</button></a>
+                            <a href='/admin/deleteProduct/$data->id'><button class='btn btn-outline-danger'>Delete</button></a>
+                        </div>
+                            
+
                     </div> 
 
                 </div>
             </div>
             ";
         }
-      ?>   
+      ?>
+        <div class="row">
+            <div class="col-12">
+                <a href="/admin/addProduct"><button class="btn btn-outline-secondary yellow btn-lg">Add</button></a>
+            </div>
+        </div>
     </div>
 
     <hr>

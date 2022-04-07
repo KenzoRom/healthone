@@ -1,13 +1,12 @@
 <!DOCTYPE html>
     <html>
     <?php
-    include_once(TEMPLATE_ROOT . "/defaults/head.php");
+    include_once(TEMPLATE_ROOT . '/defaults/head.php');
     ?>
     <body>
         <div class="container-fluid main">
             <?php
-            include_once (TEMPLATE_ROOT . "/defaults/menu.php");
-            ?>
+            include_once(TEMPLATE_ROOT . '/defaults/adminnav.php');            ?>
 
             <div class="row gy-3">
 
